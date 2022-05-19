@@ -513,5 +513,27 @@ public class Libreria
 
 		return librosAutor;
 	}
+	
+	public void renombrarCategoria(String nombreCategoriaE, String nombreReemplazo) throws Exception
+	{
+		Categoria categoriaExistente = buscarCategoria(nombreCategoriaE);
+		String nombreCategoriaExistente = categoriaExistente.darNombre();
+		if (nombreCategoriaE == nombreCategoriaExistente)
+		{
+			for (int i = 0; i < categorias.length; i++)
+			{
+				if (categorias[i].darNombre().equals(nombreReemplazo))
+					throw new Exception("No pueden haber dos categorias con el mismo nombre.");
+				else
+					categoriaExistente.setNombre(nombreReemplazo);
+			}
+		} 
+		else
+		{
+			throw new Exception("La categoria que usted desea reenombrar no existe.");
+		}
+			
+	}
 
 }
+	
