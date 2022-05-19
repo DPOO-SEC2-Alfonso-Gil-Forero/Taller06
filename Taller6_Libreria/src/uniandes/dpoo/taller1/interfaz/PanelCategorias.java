@@ -71,6 +71,11 @@ public class PanelCategorias extends JPanel implements ItemListener
 			cbbCategorias.addItem(categoria);
 		}
 	}
+	
+	public void reenombrarCategorias(String nombreCategoriaE, String nombreReemplazo)
+	{
+		
+	}
 
 	// ************************************************************************
 	// Métodos implementados de la interfaz ItemListener
