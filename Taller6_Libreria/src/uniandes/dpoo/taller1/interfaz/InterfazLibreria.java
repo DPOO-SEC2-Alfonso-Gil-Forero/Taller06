@@ -346,6 +346,31 @@ public class InterfazLibreria extends JFrame
 		}
 		JOptionPane.showMessageDialog(this, mensaje, "Consulta", JOptionPane.INFORMATION_MESSAGE);
 	}
+	
+	/**
+	 * Requerimiento borrar libros taller
+	 */
+	public void borrarLibros()
+	{
+		String autores = JOptionPane.showInputDialog(this, "Escriba uno o varios nombres de autores, separados por comas", "autor");
+		if (autores != null)
+		{
+			try 
+			{
+				int librosBorrados = libreria.borrarLibros(autores);
+				JOptionPane.showMessageDialog(this, "Se borraron "+ String.valueOf(librosBorrados), "Consulta", JOptionPane.INFORMATION_MESSAGE);
+				panelCategorias.actualizarCategorias(libreria.darCategorias());
+				
+			} 
+			catch (Exception e) 
+			{
+				JOptionPane.showMessageDialog(this, e.getMessage(), "Error",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+			
+		}
+	
+	}
 
 	// ************************************************************************
 	// Main

@@ -5,8 +5,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+
 
 /**
  * Esta clase agrupa toda la información de una librería: las categorías que se
@@ -423,6 +428,90 @@ public class Libreria
 		}
 
 		return hayAutorEnVariasCategorias;
+	}
+	
+	/**
+	 * Requerimiento borrar libros taller
+	 */
+	public int borrarLibros(String autores) throws Exception
+	{
+		List<String> lstAutores = Arrays.asList(autores.split(","));
+		List<String> lstAutoresError = new ArrayList<String>();
+		int librosBorrados = 0;
+		for (String autor : lstAutores)
+		{
+			ArrayList<Libro> libros = buscarLibrosAutor2(autor);
+			if (libros.isEmpty())
+			{
+				lstAutoresError.add(autor);
+			}
+		}
+		if (lstAutoresError.size() > 0)
+		{
+			String cadenaError = "Los siguientes autores no se encontraron: ";
+			for (String autorE : lstAutoresError)
+			{
+				cadenaError += autorE+" ";
+			}
+			throw new Exception(cadenaError);
+		}
+		List<String> lstLibrosError = new ArrayList<String>();
+		
+		for (String autor : lstAutores)
+		{
+			ArrayList<Libro> libros = buscarLibrosAutor2(autor);
+			for (Libro libro : libros)
+			{
+				try
+				{
+					catalogo.remove(libro);
+				}
+				catch (Exception e) 
+				{
+					lstLibrosError.add(libro.darTitulo());
+				}
+				librosBorrados += 1;
+			}
+			for (int i = 0; i < categorias.length; i++)
+			{
+				ArrayList<Libro> librosCategoria = categorias[i].buscarLibrosDeAutor2(autor);
+				for (Libro libroC : librosCategoria)
+				{
+					categorias[i].darLibros().remove(libroC);
+				}
+			}
+			if (lstLibrosError.size() > 0)
+			{
+				String cadenaError2 = "Los siguientes libros no se pudieron borrar: ";
+				for (String libroE : lstLibrosError)
+				{
+					cadenaError2 += libroE+" ";
+				}
+				throw new Exception(cadenaError2);
+			}
+		}
+		
+		
+		return librosBorrados;
+	}
+	
+	/**
+	 * Verifica que el nombre sea exacto
+	 */
+	public ArrayList<Libro> buscarLibrosAutor2(String cadenaAutor)
+	{
+		ArrayList<Libro> librosAutor = new ArrayList<Libro>();
+
+		for (int i = 0; i < categorias.length; i++)
+		{
+			ArrayList<Libro> librosCategoria = categorias[i].buscarLibrosDeAutor2(cadenaAutor);
+			if (!librosCategoria.isEmpty())
+			{
+				librosAutor.addAll(librosCategoria);
+			}
+		}
+
+		return librosAutor;
 	}
 
 }

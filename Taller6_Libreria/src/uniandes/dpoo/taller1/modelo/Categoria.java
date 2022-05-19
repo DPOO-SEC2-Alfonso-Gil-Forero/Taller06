@@ -168,6 +168,24 @@ public class Categoria
 
 		return librosAutor;
 	}
+	
+	/**
+	 * Verifica que el nombre sea exacto
+	 */
+	public ArrayList<Libro> buscarLibrosDeAutor2(String nombreAutor)
+	{
+		ArrayList<Libro> librosAutor = new ArrayList<Libro>();
+
+		for (Libro libro : libros)
+		{
+			if (libro.darAutor().equals(nombreAutor))
+			{
+				librosAutor.add(libro);
+			}
+		}
+
+		return librosAutor;
+	}
 
 	// ************************************************************************
 	// Métodos sobrecargados
