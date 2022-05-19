@@ -30,7 +30,6 @@ public class Libreria
 	 * El arreglo con las categorías que hay en la librería
 	 */
 	private Categoria[] categorias;
-
 	/**
 	 * Una lista con los libros disponibles en la librería
 	 */
@@ -80,6 +79,19 @@ public class Libreria
 	{
 		return catalogo;
 	}
+	public void agregarCatego(Categoria catego) {		
+	
+		Categoria[] n=new Categoria[categorias.length+1];
+		for (int i = 0; i < categorias.length; i++)
+		{
+			n[i] = categorias[i];
+		}
+		
+		n[categorias.length]=catego;
+		categorias=n;
+		
+	}	
+
 
 	// ************************************************************************
 	// Otros métodos
@@ -115,6 +127,7 @@ public class Libreria
 		}
 
 		br.close();
+		
 
 		// Convertir la lista de categorías a un arreglo
 		Categoria[] arregloCategorias = new Categoria[listaCategorias.size()];
@@ -192,6 +205,14 @@ public class Libreria
 			if (categorias[i].darNombre().equals(nombreCategoria))
 				laCategoria = categorias[i];
 		}
+		if (laCategoria==null) {			
+			
+			laCategoria= new Categoria(nombreCategoria, true);
+			agregarCatego(laCategoria);
+			JOptionPane.showMessageDialog(null, "se acabo de crear la categoria: "+nombreCategoria,"se creo una categoria",JOptionPane.INFORMATION_MESSAGE);
+			
+		}	
+
 		return laCategoria;
 	}
 
